@@ -9,12 +9,12 @@ const MyNavbar = () => {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto">
                 <Link href="/" passHref><Nav.Link>Home</Nav.Link></Link>
-                <Link href="/posts" passHref><Nav.Link>Posts</Nav.Link></Link>
+                <Link href="/posts" passHref><Nav.Link>Create Post</Nav.Link></Link>
                 <Link href="/about" passHref><Nav.Link>About</Nav.Link></Link>
-                <NavDropdown title="Account" id="basic-nav-dropdown">
+                {/* <NavDropdown title="Account" id="basic-nav-dropdown">
                     <Link href="#" passHref><NavDropdown.Item>Sign In</NavDropdown.Item></Link>
                     <Link href="#" passHref><NavDropdown.Item>Sign Up</NavDropdown.Item></Link>
-                </NavDropdown>
+                </NavDropdown> */}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>   

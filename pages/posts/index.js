@@ -1,11 +1,12 @@
 import Meta from '../../components/Meta'
+import Form from '../../components/Form'
 
 const index = () => {
     return (
         <>
-            <Meta title="All Posts" description="Your number one online post creator"/>
+            <Meta title="Create Post" description="Your number one online post creator"/>
             <main>
-                <h1>Post Index</h1> 
+                <Form /> 
             </main> 
         </>
     )
