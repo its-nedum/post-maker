@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Meta from '../components/Meta';
 
 const PageNotFound = () => {
     const router = useRouter();
@@ -13,11 +14,14 @@ const PageNotFound = () => {
     }, [])
 
     return (
-        <div className="not-found">
-            <h1>Oooooops.......</h1>
-            <h2>That page cannot be found.</h2>
-            <p>Go back to the <Link href="/">Hompage</Link></p>
-        </div>
+        <>
+            <Meta title="Post Maker | Page not found"/>
+            <div className="not-found">
+                <h1>Oooooops.......</h1>
+                <h2>That page cannot be found.</h2>
+                <p>Go back to the <Link href="/">Hompage</Link></p>
+            </div>
+        </>
     )
 }
 

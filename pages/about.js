@@ -3,7 +3,7 @@ import Meta from '../components/Meta';
 const About = () => {
     return (
         <>
-            <Meta title="About" description="Your number one online post creator" />
+            <Meta title="Post Maker | About" description="Your number one online post creator" />
             <main>
                 <h1>About Page</h1>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam eaque illum officiis eos quidem tempore alias porro ab? Voluptatum illo quisquam, tempora provident, consectetur, ullam nulla hic nostrum in cupiditate odit perferendis temporibus quia? Pariatur quaerat voluptatibus perferendis aperiam dolore.</p>
