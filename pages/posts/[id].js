@@ -1,6 +1,7 @@
 import Meta from '../../components/Meta'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { Button } from 'react-bootstrap';
 
 // telling next the number of pages to generate
 // export const getStaticPaths = async () => {
@@ -50,7 +51,7 @@ const SinglePost = ({ post }) => {
     const Router = useRouter();
 
     const goBack = () => {
-        Router.push("/");
+        Router.back();
     }
 
     const goEdit = (id) => {
@@ -61,7 +62,8 @@ const SinglePost = ({ post }) => {
         const result = confirm('Are you sure you want to delete this post?');
         if (result) {
             // delete
-            alert('Post deleted')
+            alert('Post deleted');
+            Router.push("/")
         }
         return result; //false
     }
@@ -74,9 +76,9 @@ const SinglePost = ({ post }) => {
                 <p>{post.body}</p>
             </div>
             <div className="action-btn">
-                <a href="#" className="btn btn-secondary" onClick={goBack}>Back</a>
-                <a href="#" className="btn btn-primary" onClick={() => goEdit(post.id)}>Edit</a>
-                <a href="#" className="btn btn-danger" onClick={() => goDelete(post.id)}>Delete</a>
+                <Button variant="secondary" type="button" onClick={goBack}>Back</Button>
+                <Button variant="warning" type="button" onClick={() => goEdit(post.id)}>Edit</Button>
+                <Button variant="danger" type="button" onClick={() => goDelete(post.id)}>Delete</Button>
             </div>
         </>
     )
