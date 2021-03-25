@@ -1,5 +1,5 @@
 import Meta from '../components/Meta';
-import styles from '../styles/Posts.module.css'
+import styles from '../styles/Post.module.css'
 import Link from 'next/link'
 
 export const getStaticProps = async () => {
