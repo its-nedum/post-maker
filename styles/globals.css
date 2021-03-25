@@ -62,3 +62,11 @@ footer {
   color: #4979ff;
   text-decoration: underline;
 }
+
+.action-btn {
+  text-align: center;
+  margin-top: 10rem;
+}
+.action-btn a {
+  margin-right: 20px;
+}

@@ -2,7 +2,18 @@ import Meta from '../components/Meta';
 import styles from '../styles/Post.module.css'
 import Link from 'next/link'
 
-export const getStaticProps = async () => {
+// export const getStaticProps = async () => {
+//   const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=10');
+//   const posts = await res.json();
+
+//   return {
+//     props: {
+//       posts
+//     }
+//   }
+// }
+
+export const getServerSideProps = async () => {
   const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=10');
   const posts = await res.json();
 
