@@ -2,15 +2,16 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient();
 
 
-const getPostById = async (req, res) => {
+const getPostToEdit = async (req, res) => {
     const id = Number(req.query.id);
 
     if (req.method == 'GET') {
-        const post = await prisma.post.findUnique({ where: { id }, include: { user: true } });
+        const post = await prisma.post.findUnique({ where: { id } });
         if(!post) {
             return res.status(400).json({
                 status: 'error',
-                message: 'Post not found'
+                message: 'Post not found',
+                data: []
             });
         }
 
@@ -23,4 +24,4 @@ const getPostById = async (req, res) => {
     return res.status(403).json({ message: 'Wrong request type'});
 }
 
-export default getPostById
+export default getPostToEdit
