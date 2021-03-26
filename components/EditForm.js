@@ -57,11 +57,11 @@ const EditForm = ({ post }) => {
         <>
         <Card className="mt-3 mb-3">
             <Card.Body>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                     <h4>Edit Post</h4>
                     <hr />
                     <small className="text-danger">{error}</small>
-                    <Form.Group controlId="formBasicInput" onSubmit={handleSubmit}>
+                    <Form.Group controlId="formBasicInput">
                         <Form.Label>Title</Form.Label>
                         <Form.Control type="text" value={title} onChange={(e)=> setTitle(e.target.value)}/>
                     </Form.Group>
