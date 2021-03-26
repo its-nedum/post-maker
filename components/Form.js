@@ -5,6 +5,8 @@ const PostForm = () => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [error, setError] = useState('');
+    const [btnText, setBtnText] = useState('Submit');
+    const [mesg, setMesg] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,10 +18,13 @@ const PostForm = () => {
 
         // clear error message if any
         setError('')
+        setBtnText('Processing...')
+        const userId = localStorage.getItem('user-x');
 
         const post = {
             title,
             body,
+            userId,
         }
 
         // send to api
@@ -30,9 +35,15 @@ const PostForm = () => {
             },
             body: JSON.stringify(post)
         });
-        const resp = await send.json();
-        
-        console.log(resp)
+        const { message } = await send.json();
+        // update btn text
+        setBtnText('Submit')
+        // display success message
+        setMesg(message)
+        // clear message
+        setTimeout(() => {
+            setMesg('')
+        }, 3000)
 
         // clear input fileds
         setTitle('');
@@ -56,9 +67,9 @@ const PostForm = () => {
                         <Form.Label>Content</Form.Label>
                         <Form.Control as="textarea" placeholder="Post content goes here.." value={body} onChange={(e)=> setBody(e.target.value)}/>
                     </Form.Group>
-
+                    <p className="text-center">{mesg}</p>
                     <Button variant="primary" type="button" onClick={handleSubmit}>
-                        Submit
+                        {btnText}
                     </Button>
                 </Form>
             </Card.Body>

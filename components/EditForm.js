@@ -8,7 +8,7 @@ const EditForm = ({ post }) => {
     const [body, setBody] = useState(post.body);
     const [id, setId] = useState(post.id);
     const [error, setError] = useState('');
-    const [message, setMessage] = useState('');
+    const [mesg, setMesg] = useState('');
     const [btnText, setBtnText] = useState('Submit')
 
     const Router = useRouter();
@@ -46,10 +46,10 @@ const EditForm = ({ post }) => {
             // update btn text
             setBtnText('Submit')
             // display success message
-            setMessage(message)
+            setMesg(message)
             // clear message
             setTimeout(() => {
-                setMessage('')
+                setMesg('')
             }, 3000)
     }
 
@@ -70,7 +70,7 @@ const EditForm = ({ post }) => {
                         <Form.Label>Content</Form.Label>
                         <Form.Control as="textarea" value={body} onChange={(e)=> setBody(e.target.value)}/>
                     </Form.Group>
-                    <p className="text-center">{message}</p>
+                    <p className="text-center">{mesg}</p>
                     <Button variant="warning" type="button" onClick={handleSubmit}>
                         { btnText }
                     </Button>
