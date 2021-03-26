@@ -14,12 +14,12 @@ import Link from 'next/link'
 // }
 
 export const getServerSideProps = async () => {
-  const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=10');
-  const posts = await res.json();
+  const res = await fetch('http://localhost:3000/api/posts', { method: 'GET' });
+  const { data } = await res.json();
 
   return {
     props: {
-      posts
+      posts: data
     }
   }
 }

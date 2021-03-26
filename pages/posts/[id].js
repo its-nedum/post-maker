@@ -37,12 +37,12 @@ import { Button } from 'react-bootstrap';
 export const getServerSideProps = async (context) => {
     const id = context.params.id;
 
-    const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-    const post = await res.json();
+    const res = await fetch(`http://localhost:3000/api/posts/${id}`, { method: 'GET' });
+    const { data } = await res.json();
   
     return {
       props: {
-        post
+        post: data
       }
     }
 }
@@ -74,6 +74,9 @@ const SinglePost = ({ post }) => {
             <div>
                 <h1>{post.title}</h1>
                 <p>{post.body}</p>
+            </div>
+            <div>
+                <p>Created by: {`${post.user.firstname} ${post.user.lastname}`}</p>
             </div>
             <div className="action-btn">
                 <Button variant="secondary" type="button" onClick={goBack}>Back</Button>
