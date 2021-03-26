@@ -1,41 +1,10 @@
 import Meta from '../../components/Meta'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Button } from 'react-bootstrap';
 
-// telling next the number of pages to generate
-// export const getStaticPaths = async () => {
-//     const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=10');
-//     const posts = await res.json();
-
-//     const paths = posts.map(post => {
-//         return {
-//             params: { id: post.id.toString() }
-//         }
-//     });
-
-//     return {
-//         paths,
-//         fallback: false,
-//     }
-// }
-
-// fetching a single post
-// export const getStaticProps = async (context) => {
-//     const id = context.params.id;
-
-//     const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-//     const post = await res.json();
-  
-//     return {
-//       props: {
-//         post
-//       }
-//     }
-// }
-
 export const getServerSideProps = async (context) => {
     const id = context.params.id;
+
 
     const res = await fetch(`http://localhost:3000/api/posts/${id}`, { method: 'GET' });
     const { data } = await res.json();
@@ -58,12 +27,16 @@ const SinglePost = ({ post }) => {
         Router.push(`/posts/edit/${id}`);
     }
 
-    const goDelete = (id) => {
+    const goDelete = async (id) => {
         const result = confirm('Are you sure you want to delete this post?');
         if (result) {
-            // delete
-            alert('Post deleted');
-            Router.push("/")
+            // send to delete api
+            const res = await fetch(`http://localhost:3000/api/posts/delete/${id}`, { method: 'DELETE' });
+            const { status, message } = await res.json();
+            if (status === 'success') {
+                alert(message);
+                Router.push("/")
+            }   
         }
         return result; //false
     }
