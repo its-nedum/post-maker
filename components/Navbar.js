@@ -1,11 +1,13 @@
 import { Navbar, Nav } from 'react-bootstrap'
 import Link from 'next/link'
 
-const authStatus = () => {
-    return localStorage.getItem('user-x');
-}
 
 const MyNavbar = () => {
+
+    const authStatus = () => {
+        return localStorage.getItem('user-x');
+    }
+    
     return (
         <Navbar bg="secondary" expand="lg">
             <Link href="/" passHref><Navbar.Brand className="text-white">Post Maker</Navbar.Brand></Link>
