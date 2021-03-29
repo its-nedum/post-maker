@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { comparePassword, generateToken } from '../services/auth.service'
+import { comparePassword, generateToken, setTokenCookie } from '../services/auth.service'
 const prisma = new PrismaClient();
 
 
@@ -29,10 +29,12 @@ const login = async (req, res) => {
         const { id, firstname, lastname } = theUser;
         const token = await generateToken({ id, firstname, lastname });
 
+        // set cookie
+        setTokenCookie(res, token);
+
         return res.status(200).json({
             status: 'success',
             message: 'Account login was successful',
-            data: token,
         });
     }
     return res.status(403).json({ message: 'Wrong request type'});

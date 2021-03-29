@@ -1,12 +1,23 @@
 import { Navbar, Nav } from 'react-bootstrap'
 import Link from 'next/link'
+// import { logoutUser } from '../pages/api/services/auth.service'
+// import { useRouter } from 'next/router'
+
 
 
 const MyNavbar = () => {
+// const Router = useRouter()
 
-    const authStatus = () => {
-        return localStorage.getItem('user-x');
-    }
+//     const logoutUser = async () => {
+//         fetch('http://localhost:3000/api/auth/logout', {
+//             method: 'DELETE',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//         });
+//         Router.push('/')
+
+//     }
     
     return (
         <Navbar bg="secondary" expand="lg">

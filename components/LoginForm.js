@@ -11,10 +11,6 @@ const PostForm = () => {
 
     const Router = useRouter();
 
-    const saveAuth = (id) => {
-        localStorage.setItem('user-x', id);
-      };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -40,11 +36,8 @@ const PostForm = () => {
             },
             body: JSON.stringify(user)
         });
-        const { data, status, message } = await send.json();
+        const { status, message } = await send.json();
         if (status === 'success') {
-            const { id } = data;
-            saveAuth(id);
-            
             // update btn text
             setBtnText('Sign Up')
             // display success message
