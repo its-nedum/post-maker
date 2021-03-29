@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { hashPassword } from '../services/auth.service'
 const prisma = new PrismaClient();
 
 
@@ -11,16 +12,19 @@ const createAccount = async (req, res) => {
             return res.status(400).json({ message: 'Required fields are blank' })
         }
 
+        const chkUser = await prisma.user.findUnique({ where: { email } });
+        if (chkUser) {
+            return res.status(400).json({ message: 'Account already exist' })
+        }
+
+        // hash the user password
+        const hash = await hashPassword(password);
+
         const data = {
             firstname,
             lastname, 
             email, 
-            password
-        }
-
-        const chkUser = await prisma.user.findUnique({ where: { email } });
-        if (chkUser) {
-            return res.status(400).json({ message: 'Account already exist' })
+            password: hash
         }
 
         // send it to database for saving
@@ -36,7 +40,6 @@ const createAccount = async (req, res) => {
         return res.status(200).json({
             status: 'success',
             message: 'Account created successfully',
-            data: result,
         });
     }
     return res.status(403).json({ message: 'Wrong request type'});
