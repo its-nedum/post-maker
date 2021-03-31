@@ -6,7 +6,7 @@ import { baseUrl } from '../utils/baseUrl'
 
 
 const MyNavbar = () => {
-    const user = useContext(AuthContext)
+    const {user} = useContext(AuthContext)
 
     const logoutUser = async () => {
         await fetch(`${baseUrl}/api/auth/logout`, {

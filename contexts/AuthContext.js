@@ -1,10 +1,12 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { baseUrl } from '../utils/baseUrl'
+import { getId } from '../utils/getId'
 
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState()
+    const [id, setId] = useState()
 
     const getCookie = async () => {
         try {
@@ -17,8 +19,11 @@ const AuthContextProvider = ({ children }) => {
             const { cookie } = await response.json()
             if (!cookie) {
                 setUser(null)
+                setId(null)
             }
             setUser(cookie)
+            const userId = await getId(cookie)
+            setId(userId)
         } catch (err) {
             console.log(err)
         }
@@ -29,7 +34,7 @@ const AuthContextProvider = ({ children }) => {
     }, [])
 
       return (
-          <AuthContext.Provider value={user}>{ children }</AuthContext.Provider>
+          <AuthContext.Provider value={{user, id}}>{ children }</AuthContext.Provider>
       )
 }
 

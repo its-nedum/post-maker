@@ -2,10 +2,11 @@ import Meta from '../../components/Meta'
 import { useRouter } from 'next/router'
 import { Button } from 'react-bootstrap';
 import { baseUrl } from '../../utils/baseUrl'
+import { useContext } from 'react'
+import { AuthContext } from '../../contexts/AuthContext'
 
 export const getServerSideProps = async (context) => {
     const id = context.params.id;
-
 
     const res = await fetch(`${baseUrl}/api/posts/${id}`, { method: 'GET' });
     const { data } = await res.json();
@@ -18,6 +19,8 @@ export const getServerSideProps = async (context) => {
 }
 
 const SinglePost = ({ post }) => {
+    const {id} = useContext(AuthContext)
+
     const Router = useRouter();
 
     const goBack = () => {
@@ -54,8 +57,12 @@ const SinglePost = ({ post }) => {
             </div>
             <div className="action-btn">
                 <Button variant="secondary" type="button" onClick={goBack}>Back</Button>
-                <Button variant="warning" type="button" onClick={() => goEdit(post.id)}>Edit</Button>
-                <Button variant="danger" type="button" onClick={() => goDelete(post.id)}>Delete</Button>
+                { post.user.id === id ?
+                    <>
+                        <Button variant="warning" type="button" onClick={() => goEdit(post.id)}>Edit</Button>
+                        <Button variant="danger" type="button" onClick={() => goDelete(post.id)}>Delete</Button>
+                    </>
+                 : null }
             </div>
         </>
     )
