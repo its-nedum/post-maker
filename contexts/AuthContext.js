@@ -31,7 +31,7 @@ const AuthContextProvider = ({ children }) => {
 
     useEffect(() => {
         getCookie()
-    }, [])
+    }, [user])
 
       return (
           <AuthContext.Provider value={{user, id}}>{ children }</AuthContext.Provider>

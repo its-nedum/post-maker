@@ -3,19 +3,26 @@ import Link from 'next/link'
 import { useContext } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
 import { baseUrl } from '../utils/baseUrl'
+import { useRouter } from 'next/router'
 
 
 const MyNavbar = () => {
     const {user} = useContext(AuthContext)
+    const Router = useRouter()
 
     const logoutUser = async () => {
-        await fetch(`${baseUrl}/api/auth/logout`, {
+        const resp = await fetch(`${baseUrl}/api/auth/logout`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             },
         });
-        console.log('Yessssssss')
+        const { status, message } = resp.json();
+        if (status === 'success') {
+            Router.push('/')
+            console.log(message)
+        }
+        
     }
     
     return (
