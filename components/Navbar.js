@@ -2,13 +2,14 @@ import { Navbar, Nav } from 'react-bootstrap'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
+import { baseUrl } from '../utils/baseUrl'
 
 
 const MyNavbar = () => {
     const user = useContext(AuthContext)
 
     const logoutUser = async () => {
-        await fetch('http://localhost:3000/api/auth/logout', {
+        await fetch(`${baseUrl}/api/auth/logout`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

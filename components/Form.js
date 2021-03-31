@@ -1,5 +1,6 @@
 import { Card, Form, Button } from 'react-bootstrap';
 import { useState } from 'react';
+import { baseUrl } from '../utils/baseUrl'
 
 const PostForm = () => {
     const [title, setTitle] = useState('');
@@ -28,7 +29,7 @@ const PostForm = () => {
         }
 
         // send to api
-        const send = await fetch('http://localhost:3000/api/posts/post', {
+        const send = await fetch(`${baseUrl}/api/posts/post`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

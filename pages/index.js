@@ -1,9 +1,10 @@
 import Meta from '../components/Meta';
 import styles from '../styles/Post.module.css'
 import Link from 'next/link'
+import { baseUrl } from '../utils/baseUrl'
 
 export const getServerSideProps = async () => {
-  const res = await fetch('http://localhost:3000/api/posts', { method: 'GET' });
+  const res = await fetch(`${baseUrl}/api/posts`, { method: 'GET' });
   const { data } = await res.json();
 
   return {

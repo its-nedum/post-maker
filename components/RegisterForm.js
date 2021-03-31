@@ -1,6 +1,7 @@
 import { Card, Form, Button, Col } from 'react-bootstrap';
 import { useState } from 'react';
 import { useRouter } from 'next/router'
+import { baseUrl } from '../utils/baseUrl'
 
 const PostForm = () => {
     const [firstname, setFirstname] = useState('');
@@ -33,7 +34,7 @@ const PostForm = () => {
         }
 
         // send to api
-        const send = await fetch('http://localhost:3000/api/auth/signup', {
+        const send = await fetch(`${baseUrl}/api/auth/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

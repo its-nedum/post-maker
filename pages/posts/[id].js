@@ -1,12 +1,13 @@
 import Meta from '../../components/Meta'
 import { useRouter } from 'next/router'
 import { Button } from 'react-bootstrap';
+import { baseUrl } from '../../utils/baseUrl'
 
 export const getServerSideProps = async (context) => {
     const id = context.params.id;
 
 
-    const res = await fetch(`http://localhost:3000/api/posts/${id}`, { method: 'GET' });
+    const res = await fetch(`${baseUrl}/api/posts/${id}`, { method: 'GET' });
     const { data } = await res.json();
   
     return {
@@ -31,7 +32,7 @@ const SinglePost = ({ post }) => {
         const result = confirm('Are you sure you want to delete this post?');
         if (result) {
             // send to delete api
-            const res = await fetch(`http://localhost:3000/api/posts/delete/${id}`, { method: 'DELETE' });
+            const res = await fetch(`${baseUrl}/api/posts/delete/${id}`, { method: 'DELETE' });
             const { status, message } = await res.json();
             if (status === 'success') {
                 alert(message);

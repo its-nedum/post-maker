@@ -1,6 +1,7 @@
 import { Card, Form, Button } from 'react-bootstrap';
 import { useState } from 'react';
 import { useRouter } from 'next/router'
+import { baseUrl } from '../utils/baseUrl'
 
 const EditForm = ({ post }) => {
 
@@ -35,7 +36,7 @@ const EditForm = ({ post }) => {
         }
 
         // send to api
-        const send = await fetch(`http://localhost:3000/api/posts/edit/update/${id}`, {
+        const send = await fetch(`${baseUrl}/api/posts/edit/update/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

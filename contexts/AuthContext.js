@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react'
+import { baseUrl } from '../utils/baseUrl'
 
 export const AuthContext = createContext();
 
@@ -7,7 +8,7 @@ const AuthContextProvider = ({ children }) => {
 
     const getCookie = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/auth/check', {
+            const response = await fetch(`${baseUrl}/api/auth/check`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
