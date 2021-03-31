@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { getUserId } from '../../../utils/getUserId'
 const prisma = new PrismaClient();
 
 
@@ -11,14 +12,16 @@ const createPost = async (req, res) => {
             return res.status(400).json({ message: 'Required fields are blank' })
         }
 
-        const post = {
+        const id = await getUserId(req)
+
+        const data = {
             title,
             body,
-            userId,
+            userId: id,
         }
 
         // send it to database for saving
-        const result = await prisma.post.create({ post });
+        const result = await prisma.post.create({ data });
 
         if (!result) {
             return res.status(400).json({
