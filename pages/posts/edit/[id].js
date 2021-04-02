@@ -1,14 +1,15 @@
 import Meta from '../../../components/Meta'
 import EditForm from '../../../components/EditForm'
+import { baseUrl } from '../../../utils/baseUrl'
 
 export const getServerSideProps = async (context) => {
     const id = context.params.id;
-    const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-    const post = await res.json();
+    const res = await fetch(`${baseUrl}/api/posts/edit/${id}`, { method: 'GET' });
+    const { data } = await res.json();
   
     return {
       props: {
-        post
+        post: data
       }
     }
 }

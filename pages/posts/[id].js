@@ -1,53 +1,26 @@
 import Meta from '../../components/Meta'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Button } from 'react-bootstrap';
-
-// telling next the number of pages to generate
-// export const getStaticPaths = async () => {
-//     const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=10');
-//     const posts = await res.json();
-
-//     const paths = posts.map(post => {
-//         return {
-//             params: { id: post.id.toString() }
-//         }
-//     });
-
-//     return {
-//         paths,
-//         fallback: false,
-//     }
-// }
-
-// fetching a single post
-// export const getStaticProps = async (context) => {
-//     const id = context.params.id;
-
-//     const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-//     const post = await res.json();
-  
-//     return {
-//       props: {
-//         post
-//       }
-//     }
-// }
+import { baseUrl } from '../../utils/baseUrl'
+import { useContext } from 'react'
+import { AuthContext } from '../../contexts/AuthContext'
 
 export const getServerSideProps = async (context) => {
     const id = context.params.id;
 
-    const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-    const post = await res.json();
+    const res = await fetch(`${baseUrl}/api/posts/${id}`, { method: 'GET' });
+    const { data } = await res.json();
   
     return {
       props: {
-        post
+        post: data
       }
     }
 }
 
 const SinglePost = ({ post }) => {
+    const {id} = useContext(AuthContext)
+
     const Router = useRouter();
 
     const goBack = () => {
@@ -58,12 +31,16 @@ const SinglePost = ({ post }) => {
         Router.push(`/posts/edit/${id}`);
     }
 
-    const goDelete = (id) => {
+    const goDelete = async (id) => {
         const result = confirm('Are you sure you want to delete this post?');
         if (result) {
-            // delete
-            alert('Post deleted');
-            Router.push("/")
+            // send to delete api
+            const res = await fetch(`${baseUrl}/api/posts/delete/${id}`, { method: 'DELETE' });
+            const { status, message } = await res.json();
+            if (status === 'success') {
+                alert(message);
+                Router.push("/")
+            }   
         }
         return result; //false
     }
@@ -75,10 +52,17 @@ const SinglePost = ({ post }) => {
                 <h1>{post.title}</h1>
                 <p>{post.body}</p>
             </div>
+            <div>
+                <p>Created by: {`${post.user.firstname} ${post.user.lastname}`}</p>
+            </div>
             <div className="action-btn">
                 <Button variant="secondary" type="button" onClick={goBack}>Back</Button>
-                <Button variant="warning" type="button" onClick={() => goEdit(post.id)}>Edit</Button>
-                <Button variant="danger" type="button" onClick={() => goDelete(post.id)}>Delete</Button>
+                { post.user.id === id ?
+                    <>
+                        <Button variant="warning" type="button" onClick={() => goEdit(post.id)}>Edit</Button>
+                        <Button variant="danger" type="button" onClick={() => goDelete(post.id)}>Delete</Button>
+                    </>
+                 : null }
             </div>
         </>
     )

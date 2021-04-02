@@ -1,40 +1,42 @@
+import { PrismaClient } from '@prisma/client'
+import { getUserId } from '../../../utils/getUserId'
+const prisma = new PrismaClient();
+
 
 const createPost = async (req, res) => {
 
-    const { title, body } = req.body;
+    if (req.method === 'POST') {
+        const { title, body, userId } = req.body;
 
-    if (!title || !body) {
-       return res.status(400).json({ message: 'Required fields are blank' })
-    }
+        if (!title || !body || !userId) {
+            return res.status(400).json({ message: 'Required fields are blank' })
+        }
 
-    const post = {
-        title,
-        body
-    }
+        const id = await getUserId(req)
 
-    // send it to database for saving
-    const response = await fetch(`https://jsonplaceholder.typicode.com/posts`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(post)
-    });
+        const data = {
+            title,
+            body,
+            userId: id,
+        }
 
-    const result = await response.json();
+        // send it to database for saving
+        const result = await prisma.post.create({ data });
 
-    if (!result) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Post not created'
+        if (!result) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Post not created'
+            });
+        }
+
+        return res.status(200).json({
+            status: 'success',
+            message: 'Post created successfully',
+            data: result,
         });
     }
-
-    return res.status(200).json({
-        status: 'success',
-        message: 'Post created successfully',
-        data: result,
-    });
+    return res.status(403).json({ message: 'Wrong request type'});
 }
 
 export default createPost
